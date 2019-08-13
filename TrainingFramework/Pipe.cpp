@@ -13,7 +13,7 @@ Pipe::~Pipe()
 }
 
 
-int timeUp = 1500;
+int timeUp = 1300;
 int timeDown = 0;
 
 void Pipe::Update(GLfloat deltatime)
@@ -28,7 +28,7 @@ void Pipe::Update(GLfloat deltatime)
 		if (timeUp > 0)
 		{
 			timeUp--;
-			pos.y = pos.y - 40 * deltatime;
+			pos.y = pos.y - 50 * deltatime;
 			//std::cout << timeDown << std::endl;
 
 		}
@@ -37,9 +37,9 @@ void Pipe::Update(GLfloat deltatime)
 			timeDown++;
 			//std::cout << timeDown << std::endl;
 
-			pos.y = pos.y + 40 * deltatime;
-			if (timeDown == 1500) {
-				timeUp = 1500;
+			pos.y = pos.y + 50 * deltatime;
+			if (timeDown == 1300) {
+				timeUp = 1300;
 				timeDown = 0;
 			}
 		}

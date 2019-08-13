@@ -263,6 +263,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Anim.cpp" />
     <ClCompile Include="Bird.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="src\Application.cpp" />
@@ -287,6 +288,7 @@
     <ClCompile Include="src\TrainingFramework.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Anim.h" />
     <ClInclude Include="Bird.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="src\Application.h" />

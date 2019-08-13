@@ -2,6 +2,7 @@
 #include "gamestatebase.h"
 #include "GameButton.h"
 #include "../../Bird.h"
+#include "../../Anim.h"
 
 class Player;
 class Bullet;
@@ -59,6 +60,7 @@ private:
 	std::list<std::shared_ptr<Pipe>> m_listPipeDown;
 	std::shared_ptr<Bird> m_Bird;
 	std::shared_ptr<Text>  m_score1;
+	std::shared_ptr<Anim>  m_BirdAnim;
 
 
 };

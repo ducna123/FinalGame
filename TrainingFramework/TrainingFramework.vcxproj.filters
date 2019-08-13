@@ -84,6 +84,9 @@
     <ClCompile Include="Bird.cpp">
       <Filter>src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Anim.cpp">
+      <Filter>src\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -162,6 +165,9 @@
       <Filter>src\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Bird.h">
+      <Filter>src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Anim.h">
       <Filter>src\GameObject</Filter>
     </ClInclude>
   </ItemGroup>

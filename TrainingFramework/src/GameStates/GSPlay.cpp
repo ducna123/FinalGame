@@ -18,6 +18,7 @@ int GSPlay::m_score = 0;
 float timePlus;
 
 bool isDead = false;
+int count = 0;
 GSPlay::GSPlay()
 {
 	m_SpawnCooldown = 1.5;
@@ -35,7 +36,7 @@ GSPlay::~GSPlay()
 
 void GSPlay::Init()
 {
-
+	count = 0;
 	isDead = false;
 
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
@@ -87,8 +88,8 @@ void GSPlay::Init()
 	m_Menu->SetSize(200, 80);
 	m_Menu->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateTypes::STATE_Menu);
+		SoundManager::GetInstance()->PauseSound("BG");
 		});
-
 
 	//init sound
 	SoundManager::GetInstance()->AddSound("Fly");
@@ -149,10 +150,8 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 }
 
 
-
 void GSPlay::Update(float deltaTime)
 {
-
 	if (m_Bird->IsAlive())
 	{
 		if (m_SpawnCooldown > 0)
@@ -179,7 +178,7 @@ void GSPlay::Update(float deltaTime)
 			stream << std::fixed << std::setprecision(0) << m_Bird->GetPoint();
 			std::string score = "score: " + stream.str();
 			m_score1->setText(score);
-			timePlus = 2.5;
+			timePlus = 3;
 		}
 
 		for (auto Pipe : m_listPipeUp)
@@ -199,10 +198,9 @@ void GSPlay::Update(float deltaTime)
 		}
 	}
 	else {
-		Vector2 pos = m_Bird->Get2DPosition();
-
-		if (isDead == false)
-		{
+		Vector2 pos;
+		if (count == 0) {
+			pos = m_Bird->Get2DPosition();
 			auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 			auto texture = ResourceManagers::GetInstance()->GetTexture("birdDead");
 			auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
@@ -211,15 +209,21 @@ void GSPlay::Update(float deltaTime)
 			m_Bird->Set2DPosition(pos);
 			m_Bird->SetIsAlive(false);
 			SoundManager::GetInstance()->PlaySound("Dead");
-			isDead = true;
-			SpawnExplosive(Vector2(pos.x+50,pos.y));
+			SpawnExplosive(Vector2(pos.x + 50, pos.y));
+		}
+		count++;
 
+		m_Bird->Dead();
+
+
+		if (isDead == false && count == 300)
+		{
+			isDead = true;
 			m_Over->Set2DPosition(400, 240);
 			m_Replay->Set2DPosition(480, 230);
 			m_Menu->Set2DPosition(480, 315);
 
 		}
-		m_Bird->Dead();
 	}
 
 
@@ -268,8 +272,6 @@ void GSPlay::Draw()
 	m_Over->Draw();
 	m_Replay->Draw();
 	m_Menu->Draw();
-
-
 }
 
 void GSPlay::CreateRandomEnermy()
@@ -312,7 +314,7 @@ void GSPlay::CreatRandomPipeUp(int x)
 	{
 		if (!pipe->IsActive())
 		{
-			if (x > 20) pipe->SetMoveY(true);
+			if (x > 15) pipe->SetMoveY(true);
 			pipe->SetActive(true);
 			pipe->checkColider = true;
 			pipe->Set2DPosition(posUp);
@@ -343,7 +345,7 @@ void GSPlay::CreatRandomPipeDown(int x)
 	{
 		if (!pipe->IsActive())
 		{
-			if (x > 20) pipe->SetMoveY(true);
+			if (x > 15) pipe->SetMoveY(true);
 			pipe->SetActive(true);
 			pipe->Set2DPosition(posDown);
 			pipe->checkColider = true;
